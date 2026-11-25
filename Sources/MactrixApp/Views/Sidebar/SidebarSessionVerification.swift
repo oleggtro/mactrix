@@ -100,7 +100,9 @@ struct SessionVerificationStatusView: View {
 
   private func startVerificationRequest() async {
     do {
+      Logger.viewCycle.debug("requesting device verification")
       try await appState.matrixClient?.requestDeviceVerification()
+      Logger.viewCycle.debug("Device verification initiated")
       windowState.requestedVerification = true
     } catch {
       Logger.viewCycle.error("request device verification failed: \(error)")

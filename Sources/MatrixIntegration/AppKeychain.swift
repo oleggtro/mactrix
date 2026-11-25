@@ -8,8 +8,13 @@ enum KeychainError: Error {
 struct AppKeychain {
   private let service: String
 
-  init(service: String = Bundle.main.bundleIdentifier!) {
-    self.service = service
+  init() {
+    let bundleID = Bundle.main.bundleIdentifier!
+    #if DEBUG
+      self.service = bundleID + ".dev"
+    #else
+      self.service = bundleID
+    #endif
   }
 
   private var baseQuery: [CFString: Any] {
